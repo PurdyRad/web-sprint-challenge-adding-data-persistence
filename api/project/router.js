@@ -1,13 +1,22 @@
-const express = require('express')
+const express = require('express');
+const Project = require('./model');
 
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    console.log('ya got the get endpoint')
+    Project.getProjects()
+    .then(projects => {
+        res.status(200).json(projects);
+    })
+    .catch(next);
 });
 
 router.post('/', (req, res, next) => {
-    console.log('ya got the post endpoint')
+    Project.createProject(req.body)
+    .then(newProject => {
+        res.status(201).json(newProject);
+    })
+    .catch(next);
 });
 
 router.use((err, req, res, next) => { // eslint-disable-line
