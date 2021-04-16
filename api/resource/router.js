@@ -1,13 +1,22 @@
-const express = require('express')
+const express = require('express');
+const Resource = require('./model');
 
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    console.log('ya got the get endpoint')
+    Resource.getResources()
+    .then(resources => {
+        res.status(200).json(resources);
+    })
+    .catch(next);
 });
 
 router.post('/', (req, res, next) => {
-    console.log('ya got the post endpoint')
+    Resource.createResource(req.body)
+    .then(newResource => {
+        res.status(201).json(newResource);
+    })
+    .catch(next);
 });
 
 router.use((err, req, res, next) => { // eslint-disable-line
