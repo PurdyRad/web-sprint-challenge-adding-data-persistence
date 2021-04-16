@@ -11,6 +11,14 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
+router.get('/:id', (req,res,next) => {
+    Project.getProjectById(req.params.id)
+    .then(rez => {
+        res.status(200).json(rez)
+    })
+    .catch(next)
+})
+
 router.post('/', (req, res, next) => {
     Project.createProject(req.body)
     .then(newProject => {
